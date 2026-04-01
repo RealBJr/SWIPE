@@ -1,0 +1,7 @@
+#!/bin/sh
+
+echo "Auto-formatting before push..."
+npx prettier --write .
+git add -A
+
+echo "Code formatting done."
