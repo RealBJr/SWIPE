@@ -1,6 +1,6 @@
-# SWIPE
+# Swipe
 
-SWIPE (Student Wide Information Peer Exchange) enhances student life by combining professor/class reviews with a Tinder-like social feature. Students can connect with peers, chat on mutual interest, and swipe to save professors, classes, or TAs for future planning. The app aims to boost engagement, community belonging, and centralizes peer reviews.
+Expo app for Swipe.
 
 ## Prerequisites
 
@@ -12,7 +12,6 @@ SWIPE (Student Wide Information Peer Exchange) enhances student life by combinin
 1. Install dependencies
 
    ```bash
-   cd swipe
    npm install
    ```
 
@@ -22,7 +21,7 @@ SWIPE (Student Wide Information Peer Exchange) enhances student life by combinin
    copy .env.example .env
    ```
 
-   Fill in the Firebase values in `swipe/.env`.
+   Fill in the Firebase values in `.env`.
 
 ## Run the app
 
@@ -39,3 +38,15 @@ SWIPE (Student Wide Information Peer Exchange) enhances student life by combinin
    - iOS simulator
    - Web
    - Expo Go
+
+You can start developing by editing the files inside the `app` directory. This project uses file-based routing.
+
+## Reset the project
+
+When you're ready, run:
+
+```bash
+npm run reset-project
+```
+
+This command will move the starter code to the `app-example` directory and create a blank `app` directory where you can start developing.
