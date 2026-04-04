@@ -164,6 +164,7 @@ export const seedProfessors: ProfessorProfile[] = [
     activeTerm: 'Spring 2026',
     reviewSnippet: 'Explains abstractions clearly and gives actionable feedback on projects.',
     coursesTaught: ['CS 101', 'CS 220'],
+    imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop',
   },
   {
     id: 'prof-okonkwo',
@@ -174,6 +175,7 @@ export const seedProfessors: ProfessorProfile[] = [
     activeTerm: 'Spring 2026',
     reviewSnippet: 'Problem sets are challenging but office hours are very supportive.',
     coursesTaught: ['CS 301'],
+    imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop',
   },
   {
     id: 'prof-martins',
@@ -184,6 +186,7 @@ export const seedProfessors: ProfessorProfile[] = [
     activeTerm: 'Spring 2026',
     reviewSnippet: 'Expect rigorous proofs; the course rewards consistent practice.',
     coursesTaught: ['CS 401'],
+    imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop',
   },
   {
     id: 'prof-chen',
@@ -194,6 +197,7 @@ export const seedProfessors: ProfessorProfile[] = [
     activeTerm: 'Spring 2026',
     reviewSnippet: 'Labs connect theory to real systems; readings are curated well.',
     coursesTaught: ['CS 410'],
+    imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=500&fit=crop',
   },
   {
     id: 'prof-patel',
@@ -204,6 +208,7 @@ export const seedProfessors: ProfessorProfile[] = [
     activeTerm: 'Spring 2026',
     reviewSnippet: 'Project-based ML course with clear grading rubrics.',
     coursesTaught: ['CS 350'],
+    imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop',
   },
   {
     id: 'prof-nguyen',
@@ -214,6 +219,7 @@ export const seedProfessors: ProfessorProfile[] = [
     activeTerm: 'Fall 2025',
     reviewSnippet: 'Strong on SQL and internals; expect detailed labs.',
     coursesTaught: ['CS 320'],
+    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
   },
   {
     id: 'prof-singh',
@@ -224,6 +230,7 @@ export const seedProfessors: ProfessorProfile[] = [
     activeTerm: 'Spring 2026',
     reviewSnippet: 'Pipeline design focus is practical; teams present weekly milestones.',
     coursesTaught: ['DE 310'],
+    imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop',
   },
   {
     id: 'prof-kim',
@@ -234,6 +241,7 @@ export const seedProfessors: ProfessorProfile[] = [
     activeTerm: 'Fall 2025',
     reviewSnippet: 'Kernel projects are intense; checkpoints help you avoid falling behind.',
     coursesTaught: ['CS 330'],
+    imageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop',
   },
 ];
 
@@ -246,6 +254,7 @@ export const seedTAs: TAProfile[] = [
     officeHours: 'Tue/Thu 3–5pm, CS lab',
     rating: 4.7,
     reviewSnippet: 'Explains recursion and trees with patient walkthroughs.',
+    imageUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop',
   },
   {
     id: 'ta-02',
@@ -255,6 +264,7 @@ export const seedTAs: TAProfile[] = [
     officeHours: 'Mon/Wed 1–3pm, Zoom + in-person',
     rating: 4.8,
     reviewSnippet: 'Great at debugging RPC issues and clarifying assignment specs.',
+    imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop',
   },
   {
     id: 'ta-03',
@@ -264,6 +274,7 @@ export const seedTAs: TAProfile[] = [
     officeHours: 'Fri 10am–12pm, CS help room',
     rating: 4.6,
     reviewSnippet: 'Lab sessions are structured and beginner-friendly.',
+    imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop',
   },
   {
     id: 'ta-04',
@@ -273,6 +284,7 @@ export const seedTAs: TAProfile[] = [
     officeHours: 'Wed 4–6pm, AI lab',
     rating: 4.9,
     reviewSnippet: 'Helpful on model debugging and experiment design.',
+    imageUrl: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop',
   },
   {
     id: 'ta-05',
@@ -282,6 +294,7 @@ export const seedTAs: TAProfile[] = [
     officeHours: 'Tue 5–7pm, library study room',
     rating: 4.5,
     reviewSnippet: 'SQL optimization tips are practical for exams.',
+    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
   },
   {
     id: 'ta-06',
@@ -291,6 +304,7 @@ export const seedTAs: TAProfile[] = [
     officeHours: 'Thu 2–4pm, DS lab',
     rating: 4.6,
     reviewSnippet: 'Pipeline reviews are thorough and constructive.',
+    imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop',
   },
   {
     id: 'ta-07',
@@ -300,6 +314,7 @@ export const seedTAs: TAProfile[] = [
     officeHours: 'Mon/Fri 11am–1pm, theory lounge',
     rating: 4.4,
     reviewSnippet: 'Good at proof strategies and common exam patterns.',
+    imageUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&h=500&fit=crop',
   },
   {
     id: 'ta-08',
@@ -309,6 +324,7 @@ export const seedTAs: TAProfile[] = [
     officeHours: 'Wed/Fri 6–8pm, systems lab',
     rating: 4.5,
     reviewSnippet: 'Helps unblock Pintos-style assignments with concrete steps.',
+    imageUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=500&fit=crop',
   },
 ];
 
@@ -577,7 +593,11 @@ export const seedCollaboration: CollaborationEndorsement[] = [
   },
 ];
 
-export const peersWhoAlreadyConnected: string[] = ['stud-01', 'stud-05', 'stud-11', 'stud-14'];
+export const peersWhoAlreadyConnected: string[] = [
+  'stud-01', 'stud-02', 'stud-04', 'stud-05', 'stud-06',
+  'stud-08', 'stud-10', 'stud-11', 'stud-13', 'stud-14',
+  'stud-15', 'stud-17', 'stud-18',
+];
 
 export const seedThreads: ChatThread[] = [
   {

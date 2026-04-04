@@ -19,7 +19,7 @@ export const Copy = {
   editProfile: 'Edit Profile',
   myClasses: 'My Classes',
   recentConnections: 'Recent Connections',
-  metVia: (code: string) => `Met via ${code}`,
+  metVia: (code: string) => `Connected through ${code}`,
   shared: (name: string) => `Shared: ${name}`,
   reviews: 'Reviews',
   addReview: 'Add review',

@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { CompactAcademicRow } from '@/components/compact-academic-row';
 import { SectionHeader } from '@/components/section-header';
+import { EmptyState } from '@/components/ui/empty-state';
 import { Screen } from '@/components/ui/screen';
 import { Copy } from '@/constants/copy';
 import { courseById, professorById, taById } from '@/data/seed';
@@ -26,7 +27,11 @@ export default function SavedScreen() {
       <Text style={[styles.sub, { color: c.textSecondary }]}>{Copy.academicRegistry}</Text>
 
       {totalSaved === 0 ? (
-        <Text style={[styles.empty, { color: c.textMuted }]}>{Copy.emptySaved}</Text>
+        <EmptyState
+          icon="bookmark-outline"
+          title="Nothing saved yet"
+          subtitle={Copy.emptySaved}
+        />
       ) : null}
 
       {savedClasses.length > 0 ? (

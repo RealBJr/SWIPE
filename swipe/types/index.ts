@@ -40,6 +40,7 @@ export interface ProfessorProfile {
   activeTerm: string;
   reviewSnippet: string;
   coursesTaught: string[];
+  imageUrl: string;
 }
 
 export interface TAProfile {
@@ -50,6 +51,7 @@ export interface TAProfile {
   officeHours: string;
   rating: number;
   reviewSnippet: string;
+  imageUrl: string;
 }
 
 export interface Review {

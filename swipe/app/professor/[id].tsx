@@ -2,6 +2,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
+import { EmptyState } from '@/components/ui/empty-state';
 import { PrimaryButton } from '@/components/ui/primary-button';
 import { Screen } from '@/components/ui/screen';
 import { Copy } from '@/constants/copy';
@@ -23,7 +24,7 @@ export default function ProfessorDetailScreen() {
   if (!p) {
     return (
       <Screen>
-        <Text style={{ color: c.textSecondary, padding: 20 }}>Professor not found.</Text>
+        <EmptyState icon="person-outline" title="Professor not found" />
       </Screen>
     );
   }

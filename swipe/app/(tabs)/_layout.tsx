@@ -13,6 +13,7 @@ export default function TabLayout() {
         headerShown: false,
         tabBarActiveTintColor: Accent.blue,
         tabBarInactiveTintColor: c.tabIconDefault,
+        tabBarHideOnKeyboard: true,
         tabBarLabelStyle: { fontSize: 11, fontWeight: '600', marginTop: 2 },
         tabBarStyle: {
           backgroundColor: c.surface,

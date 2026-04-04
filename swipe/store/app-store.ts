@@ -67,6 +67,7 @@ export interface AppState {
 
   userReviews: Review[];
   dismissedMatchPeerId: string | null;
+  _hasHydrated: boolean;
 
   login: () => void;
   logout: () => void;
@@ -138,6 +139,7 @@ export const useAppStore = create<AppState>()(
 
       userReviews: [],
       dismissedMatchPeerId: null,
+      _hasHydrated: false,
 
       login: () => set({ isLoggedIn: true }),
 
@@ -315,7 +317,7 @@ export const useAppStore = create<AppState>()(
         }),
     }),
     {
-      name: 'swipe-app',
+      name: 'swipe-app-v2',
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (s) => ({
         isLoggedIn: s.isLoggedIn,
@@ -334,6 +336,7 @@ export const useAppStore = create<AppState>()(
         userReviews: s.userReviews,
       }),
       onRehydrateStorage: () => (state) => {
+        useAppStore.setState({ _hasHydrated: true });
         if (!state) return;
         useAppStore.setState({
           isLoggedIn: true,

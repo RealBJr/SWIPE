@@ -7,6 +7,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { ClassSwipeCard, ProfessorSwipeCard, TASwipeCard } from '@/components/academic-swipe-card';
 import { StudentSwipeCard } from '@/components/student-swipe-card';
 import { SwipeDeck } from '@/components/swipe-deck';
+import { LoadingIndicator } from '@/components/ui/loading-indicator';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import { Screen } from '@/components/ui/screen';
 import { courseById, professorById, studentById, taById } from '@/data/seed';
@@ -36,7 +37,7 @@ export default function ExploreScreen() {
 
   const firstName = profile?.fullName.split(' ')[0] ?? '';
 
-  const { data: queue = [], refetch } = useQuery({
+  const { data: queue = [], refetch, isLoading } = useQuery({
     queryKey: ['explore', segment],
     queryFn: () => fetchExploreQueue(segment),
   });
@@ -77,7 +78,9 @@ export default function ExploreScreen() {
       </View>
 
       <View style={styles.deck}>
-      {segment === 'students' ? (
+      {isLoading ? <LoadingIndicator /> : null}
+
+      {!isLoading && segment === 'students' ? (
         <SwipeDeck
           data={studentCards}
           mode="connect"
@@ -98,7 +101,7 @@ export default function ExploreScreen() {
         />
       ) : null}
 
-      {segment === 'classes' ? (
+      {!isLoading && segment === 'classes' ? (
         <SwipeDeck
           data={classCards}
           mode="save"
@@ -115,7 +118,7 @@ export default function ExploreScreen() {
         />
       ) : null}
 
-      {segment === 'professors' ? (
+      {!isLoading && segment === 'professors' ? (
         <SwipeDeck
           data={profCards}
           mode="save"
@@ -132,7 +135,7 @@ export default function ExploreScreen() {
         />
       ) : null}
 
-      {segment === 'tas' ? (
+      {!isLoading && segment === 'tas' ? (
         <SwipeDeck
           data={taCards}
           mode="save"

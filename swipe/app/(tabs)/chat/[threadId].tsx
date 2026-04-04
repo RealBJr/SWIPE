@@ -1,9 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
-import { FlatList, KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { MessageBubble } from '@/components/message-bubble';
+import { EmptyState } from '@/components/ui/empty-state';
+import { Screen } from '@/components/ui/screen';
 import { Copy } from '@/constants/copy';
 import { Accent, Layout } from '@/constants/theme';
 import { useAppColors } from '@/hooks/use-app-colors';
@@ -24,17 +26,14 @@ export default function ChatThreadScreen() {
 
   if (!threadId || !thread) {
     return (
-      <View style={[styles.fill, { backgroundColor: c.background }]}>
-        <Text style={{ color: c.textSecondary, padding: 20 }}>Conversation not found.</Text>
-      </View>
+      <Screen>
+        <EmptyState icon="chatbubble-outline" title="Conversation not found" />
+      </Screen>
     );
   }
 
   return (
-    <KeyboardAvoidingView
-      style={[styles.fill, { backgroundColor: c.background }]}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      keyboardVerticalOffset={88}>
+    <Screen keyboard padded={false} edges={['left', 'right']}>
       <View style={[styles.banner, { backgroundColor: c.surface }, Layout.shadowLight]}>
         <Text style={[styles.bannerTitle, { color: c.text }]}>{thread.peerName}</Text>
         {thread.sharedClassLabel ? (
@@ -80,12 +79,11 @@ export default function ChatThreadScreen() {
           <Ionicons name="send" size={18} color="#FFF" />
         </Pressable>
       </View>
-    </KeyboardAvoidingView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1 },
   banner: { paddingHorizontal: 20, paddingVertical: 14 },
   bannerTitle: { fontSize: 17, fontWeight: '800' },
   bannerSub: { marginTop: 3, fontSize: 12, fontWeight: '600' },

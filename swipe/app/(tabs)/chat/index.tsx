@@ -1,6 +1,7 @@
 import { router } from 'expo-router';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 
+import { EmptyState } from '@/components/ui/empty-state';
 import { Screen } from '@/components/ui/screen';
 import { Copy } from '@/constants/copy';
 import { Accent, Layout } from '@/constants/theme';
@@ -25,7 +26,11 @@ export default function ChatListScreen() {
         keyExtractor={(t) => t.id}
         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 12, paddingBottom: 24 }}
         ListEmptyComponent={
-          <Text style={[styles.empty, { color: c.textSecondary }]}>{Copy.emptyChat}</Text>
+          <EmptyState
+            icon="chatbubbles-outline"
+            title="No conversations yet"
+            subtitle={Copy.emptyChat}
+          />
         }
         renderItem={({ item }) => (
           <Pressable
