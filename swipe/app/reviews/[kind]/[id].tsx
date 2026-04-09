@@ -66,9 +66,8 @@ export default function ReviewsModal() {
     })
     .onEnd(() => {
       if (sheetY.value > 120) {
-        sheetY.value = withTiming(SCREEN_H, { duration: 200 }, (done) => {
-          if (done) runOnJS(close)();
-        });
+        runOnJS(close)();
+        sheetY.value = withTiming(SCREEN_H, { duration: 200 });
         return;
       }
       sheetY.value = withSpring(0, { damping: 18 });
