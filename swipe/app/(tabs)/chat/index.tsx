@@ -4,7 +4,7 @@ import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Screen } from '@/components/ui/screen';
 import { Copy } from '@/constants/copy';
-import { Accent, Layout } from '@/constants/theme';
+import { Fonts, Layout } from '@/constants/theme';
 import { useAppColors } from '@/hooks/use-app-colors';
 import { useAppStore } from '@/store/app-store';
 
@@ -18,13 +18,15 @@ export default function ChatListScreen() {
   return (
     <Screen padded={false}>
       <View style={styles.top}>
-        <Text style={[styles.title, { color: c.text }]}>Chat</Text>
-        <Text style={[styles.sub, { color: c.textSecondary }]}>Only classmates you have connected with.</Text>
+        <Text style={[styles.title, { color: c.onSurface }]}>Scholarly Chat</Text>
+        <Text style={[styles.sub, { color: c.onSurfaceVariant }]}>
+          Only classmates you have connected with.
+        </Text>
       </View>
       <FlatList
         data={list}
         keyExtractor={(t) => t.id}
-        contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 12, paddingBottom: 24 }}
+        contentContainerStyle={{ paddingHorizontal: 24, paddingTop: 16, paddingBottom: 30 }}
         ListEmptyComponent={
           <EmptyState
             icon="chatbubbles-outline"
@@ -39,17 +41,25 @@ export default function ChatListScreen() {
             }
             style={({ pressed }) => [
               styles.row,
-              { backgroundColor: c.surface },
-              Layout.shadowLight,
+              { backgroundColor: c.surfaceContainerLowest },
+              Layout.seaGlowLight,
               pressed && { opacity: 0.88, transform: [{ scale: 0.99 }] },
-            ]}>
-            <View style={[styles.avatarDot, { backgroundColor: Accent.blueMuted }]}>
-              <Text style={{ color: Accent.blue, fontWeight: '800', fontSize: 15 }}>
+            ]}
+          >
+            <View style={[styles.avatarDot, { backgroundColor: c.surfaceContainerLow }]}>
+              <Text
+                style={{
+                  color: c.primary,
+                  fontWeight: '800',
+                  fontSize: 15,
+                  fontFamily: Fonts.sans,
+                }}
+              >
                 {item.peerName.charAt(0)}
               </Text>
             </View>
             <View style={styles.rowBody}>
-              <Text style={[styles.name, { color: c.text }]}>{item.peerName}</Text>
+              <Text style={[styles.name, { color: c.onSurface }]}>{item.peerName}</Text>
               {item.sharedClassLabel ? (
                 <Text style={[styles.meta, { color: c.textMuted }]}>{item.sharedClassLabel}</Text>
               ) : null}
@@ -58,7 +68,7 @@ export default function ChatListScreen() {
                   {Copy.metVia(item.metViaCourseCode)}
                 </Text>
               ) : null}
-              <Text style={[styles.preview, { color: c.textSecondary }]} numberOfLines={2}>
+              <Text style={[styles.preview, { color: c.onSurfaceVariant }]} numberOfLines={2}>
                 {item.lastMessagePreview}
               </Text>
             </View>
@@ -73,29 +83,47 @@ export default function ChatListScreen() {
 }
 
 const styles = StyleSheet.create({
-  top: { paddingHorizontal: 20, paddingTop: 14 },
-  title: { fontSize: 30, fontWeight: '900', letterSpacing: -0.5 },
-  sub: { fontSize: 13, fontWeight: '600', marginTop: 4 },
+  top: { paddingHorizontal: 24, paddingTop: 18 },
+  title: {
+    fontSize: 32,
+    fontWeight: '900',
+    letterSpacing: -0.7,
+    fontFamily: Fonts.sans,
+    marginLeft: 10,
+  },
+  sub: { fontSize: 14, fontWeight: '500', marginTop: 6, fontFamily: Fonts.sans },
   row: {
-    borderRadius: 16,
-    padding: 14,
-    marginBottom: 10,
+    borderRadius: Layout.radiusLg,
+    padding: 16,
+    marginBottom: 12,
     flexDirection: 'row',
     gap: 12,
     alignItems: 'flex-start',
   },
   avatarDot: {
-    width: 42,
-    height: 42,
-    borderRadius: 21,
+    width: 44,
+    height: 44,
+    borderRadius: 22,
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 2,
   },
   rowBody: { flex: 1 },
-  name: { fontSize: 16, fontWeight: '800' },
-  meta: { marginTop: 3, fontSize: 12, fontWeight: '700' },
-  preview: { marginTop: 6, fontSize: 13, fontWeight: '500', lineHeight: 18 },
-  time: { fontSize: 11, fontWeight: '700' },
-  empty: { padding: 24, textAlign: 'center', fontSize: 14, fontWeight: '600' },
+  name: { fontSize: 17, fontWeight: '800', fontFamily: Fonts.sans },
+  meta: {
+    marginTop: 4,
+    fontSize: 11,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+    fontFamily: Fonts.sans,
+  },
+  preview: {
+    marginTop: 8,
+    fontSize: 14,
+    fontWeight: '500',
+    lineHeight: 22,
+    fontFamily: Fonts.sans,
+  },
+  time: { fontSize: 11, fontWeight: '700', letterSpacing: 0.4, fontFamily: Fonts.sans },
 });

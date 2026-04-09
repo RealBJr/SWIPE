@@ -25,6 +25,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Rivera',
     semester: 'Fall 2025',
     tags: ['Python', 'Fundamentals', 'Projects'],
+    traits: ['Very liked', 'Clear structure'],
   },
   {
     id: 'cls-ds301',
@@ -39,6 +40,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Okonkwo',
     semester: 'Spring 2026',
     tags: ['Algorithms', 'Complexity', 'Coding'],
+    traits: ['Tough grader', 'Fair exams'],
   },
   {
     id: 'cls-algo401',
@@ -53,6 +55,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Martins',
     semester: 'Spring 2026',
     tags: ['Graphs', 'DP', 'Proofs'],
+    traits: ['Proof-heavy', 'Rigorous'],
   },
   {
     id: 'cls-dist410',
@@ -67,6 +70,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Chen',
     semester: 'Spring 2026',
     tags: ['Consensus', 'RPC', 'Fault tolerance'],
+    traits: ['Hands-on labs', 'Real systems'],
   },
   {
     id: 'cls-ai350',
@@ -81,6 +85,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Patel',
     semester: 'Fall 2025',
     tags: ['ML', 'PyTorch', 'Evaluation'],
+    traits: ['Project-based', 'Very liked'],
   },
   {
     id: 'cls-db320',
@@ -95,6 +100,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Nguyen',
     semester: 'Fall 2025',
     tags: ['SQL', 'Indexing', 'Transactions'],
+    traits: ['Heavy workload', 'Practical'],
   },
   {
     id: 'cls-de310',
@@ -109,6 +115,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Singh',
     semester: 'Spring 2026',
     tags: ['ETL', 'Warehousing', 'Quality'],
+    traits: ['Team-friendly', 'Practical'],
   },
   {
     id: 'cls-prog220',
@@ -123,6 +130,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Alvarez',
     semester: 'Fall 2025',
     tags: ['Functional', 'Types', 'Semantics'],
+    traits: ['Creative assignments', 'Conceptual'],
   },
   {
     id: 'cls-net360',
@@ -137,6 +145,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Brooks',
     semester: 'Spring 2026',
     tags: ['TCP', 'Routing', 'Security'],
+    traits: ['Lab-focused', 'Challenging'],
   },
   {
     id: 'cls-os330',
@@ -151,6 +160,7 @@ export const seedCourses: CourseOffering[] = [
     instructorName: 'Prof. Kim',
     semester: 'Fall 2025',
     tags: ['Concurrency', 'Memory', 'Kernels'],
+    traits: ['Tough grader', 'Checkpointed'],
   },
 ];
 
@@ -165,6 +175,7 @@ export const seedProfessors: ProfessorProfile[] = [
     reviewSnippet: 'Explains abstractions clearly and gives actionable feedback on projects.',
     coursesTaught: ['CS 101', 'CS 220'],
     imageUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=500&fit=crop',
+    traits: ['Very liked', 'Clear lectures'],
   },
   {
     id: 'prof-okonkwo',
@@ -176,6 +187,7 @@ export const seedProfessors: ProfessorProfile[] = [
     reviewSnippet: 'Problem sets are challenging but office hours are very supportive.',
     coursesTaught: ['CS 301'],
     imageUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&h=500&fit=crop',
+    traits: ['Supportive', 'Challenging'],
   },
   {
     id: 'prof-martins',
@@ -187,6 +199,7 @@ export const seedProfessors: ProfessorProfile[] = [
     reviewSnippet: 'Expect rigorous proofs; the course rewards consistent practice.',
     coursesTaught: ['CS 401'],
     imageUrl: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=500&fit=crop',
+    traits: ['Rigorous', 'Proof-heavy'],
   },
   {
     id: 'prof-chen',
@@ -198,6 +211,7 @@ export const seedProfessors: ProfessorProfile[] = [
     reviewSnippet: 'Labs connect theory to real systems; readings are curated well.',
     coursesTaught: ['CS 410'],
     imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=500&fit=crop',
+    traits: ['Very liked', 'Hands-on'],
   },
   {
     id: 'prof-patel',
@@ -209,6 +223,7 @@ export const seedProfessors: ProfessorProfile[] = [
     reviewSnippet: 'Project-based ML course with clear grading rubrics.',
     coursesTaught: ['CS 350'],
     imageUrl: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=500&fit=crop',
+    traits: ['Project-based', 'Fair grader'],
   },
   {
     id: 'prof-nguyen',
@@ -220,6 +235,7 @@ export const seedProfessors: ProfessorProfile[] = [
     reviewSnippet: 'Strong on SQL and internals; expect detailed labs.',
     coursesTaught: ['CS 320'],
     imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
+    traits: ['Detail-oriented', 'Challenging'],
   },
   {
     id: 'prof-singh',
@@ -231,6 +247,7 @@ export const seedProfessors: ProfessorProfile[] = [
     reviewSnippet: 'Pipeline design focus is practical; teams present weekly milestones.',
     coursesTaught: ['DE 310'],
     imageUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop',
+    traits: ['Practical', 'Team-friendly'],
   },
   {
     id: 'prof-kim',
@@ -242,6 +259,7 @@ export const seedProfessors: ProfessorProfile[] = [
     reviewSnippet: 'Kernel projects are intense; checkpoints help you avoid falling behind.',
     coursesTaught: ['CS 330'],
     imageUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=500&fit=crop',
+    traits: ['Tough grader', 'Supportive'],
   },
 ];
 
@@ -255,6 +273,7 @@ export const seedTAs: TAProfile[] = [
     rating: 4.7,
     reviewSnippet: 'Explains recursion and trees with patient walkthroughs.',
     imageUrl: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&h=500&fit=crop',
+    traits: ['Patient', 'Very liked'],
   },
   {
     id: 'ta-02',
@@ -265,6 +284,7 @@ export const seedTAs: TAProfile[] = [
     rating: 4.8,
     reviewSnippet: 'Great at debugging RPC issues and clarifying assignment specs.',
     imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop',
+    traits: ['Clear help', 'Hands-on'],
   },
   {
     id: 'ta-03',
@@ -275,6 +295,7 @@ export const seedTAs: TAProfile[] = [
     rating: 4.6,
     reviewSnippet: 'Lab sessions are structured and beginner-friendly.',
     imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop',
+    traits: ['Beginner-friendly', 'Very liked'],
   },
   {
     id: 'ta-04',
@@ -285,6 +306,7 @@ export const seedTAs: TAProfile[] = [
     rating: 4.9,
     reviewSnippet: 'Helpful on model debugging and experiment design.',
     imageUrl: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop',
+    traits: ['Constructive', 'Practical'],
   },
   {
     id: 'ta-05',
@@ -295,6 +317,7 @@ export const seedTAs: TAProfile[] = [
     rating: 4.5,
     reviewSnippet: 'SQL optimization tips are practical for exams.',
     imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop',
+    traits: ['Exam-focused', 'Helpful'],
   },
   {
     id: 'ta-06',
@@ -305,6 +328,7 @@ export const seedTAs: TAProfile[] = [
     rating: 4.6,
     reviewSnippet: 'Pipeline reviews are thorough and constructive.',
     imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=500&fit=crop',
+    traits: ['Thorough', 'Supportive'],
   },
   {
     id: 'ta-07',
@@ -315,6 +339,7 @@ export const seedTAs: TAProfile[] = [
     rating: 4.4,
     reviewSnippet: 'Good at proof strategies and common exam patterns.',
     imageUrl: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&h=500&fit=crop',
+    traits: ['Exam-focused', 'Clear help'],
   },
   {
     id: 'ta-08',
@@ -325,6 +350,7 @@ export const seedTAs: TAProfile[] = [
     rating: 4.5,
     reviewSnippet: 'Helps unblock Pintos-style assignments with concrete steps.',
     imageUrl: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=400&h=500&fit=crop',
+    traits: ['Hands-on', 'Helpful'],
   },
 ];
 
@@ -332,6 +358,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-01',
     fullName: 'Alex Morgan',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Junior',
     classIds: ['cls-cs101', 'cls-ds301', 'cls-dist410'],
@@ -343,6 +370,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-02',
     fullName: 'Riley Chen',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Senior',
     classIds: ['cls-ds301', 'cls-algo401', 'cls-ai350'],
@@ -354,6 +382,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-03',
     fullName: 'Jamal Rivers',
+    university: 'Concordia University',
     program: 'B.S. Data Science & Engineering',
     yearLabel: 'Junior',
     classIds: ['cls-de310', 'cls-db320', 'cls-ds301'],
@@ -365,6 +394,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-04',
     fullName: 'Morgan Patel',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Sophomore',
     classIds: ['cls-cs101', 'cls-prog220', 'cls-ds301'],
@@ -376,6 +406,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-05',
     fullName: 'Sofia Alvarez',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Junior',
     classIds: ['cls-net360', 'cls-os330', 'cls-ds301'],
@@ -387,6 +418,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-06',
     fullName: 'Noah Kim',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Senior',
     classIds: ['cls-dist410', 'cls-algo401', 'cls-ai350'],
@@ -398,6 +430,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-07',
     fullName: 'Emma Johansson',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Sophomore',
     classIds: ['cls-cs101', 'cls-ds301', 'cls-db320'],
@@ -409,17 +442,20 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-08',
     fullName: 'Diego Morales',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Junior',
     classIds: ['cls-ai350', 'cls-ds301', 'cls-prog220'],
     bio: 'Balancing ML projects with PL coursework; likes quiet library sessions.',
     interests: ['Machine learning', 'Programming languages'],
-    imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&sat=-100',
+    imageUrl:
+      'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop&sat=-100',
     suggestedContexts: ['Interested in ML projects', 'Looking for library study slots'],
   },
   {
     id: 'stud-09',
     fullName: 'Hannah Brooks',
+    university: 'Concordia University',
     program: 'B.S. Data Science & Engineering',
     yearLabel: 'Senior',
     classIds: ['cls-de310', 'cls-ai350', 'cls-db320'],
@@ -431,6 +467,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-10',
     fullName: 'Ethan Wright',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Junior',
     classIds: ['cls-os330', 'cls-net360', 'cls-ds301'],
@@ -442,6 +479,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-11',
     fullName: 'Priya Nair',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Sophomore',
     classIds: ['cls-cs101', 'cls-ds301', 'cls-algo401'],
@@ -453,6 +491,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-12',
     fullName: 'Lucas Meyer',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Senior',
     classIds: ['cls-dist410', 'cls-net360', 'cls-algo401'],
@@ -464,6 +503,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-13',
     fullName: 'Zoe Anderson',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Junior',
     classIds: ['cls-db320', 'cls-de310', 'cls-ds301'],
@@ -475,6 +515,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-14',
     fullName: 'Omar Farouk',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Sophomore',
     classIds: ['cls-prog220', 'cls-cs101', 'cls-ds301'],
@@ -486,6 +527,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-15',
     fullName: 'Chloe Park',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Senior',
     classIds: ['cls-ai350', 'cls-algo401', 'cls-dist410'],
@@ -497,6 +539,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-16',
     fullName: 'Ben Carter',
+    university: 'Concordia University',
     program: 'B.S. Data Science & Engineering',
     yearLabel: 'Junior',
     classIds: ['cls-de310', 'cls-db320', 'cls-ai350'],
@@ -508,6 +551,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-17',
     fullName: 'Nina Volkov',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Sophomore',
     classIds: ['cls-os330', 'cls-ds301', 'cls-cs101'],
@@ -519,6 +563,7 @@ export const seedStudents: StudentProfile[] = [
   {
     id: 'stud-18',
     fullName: 'Isaac Foster',
+    university: 'Concordia University',
     program: 'B.S. Computer Science',
     yearLabel: 'Junior',
     classIds: ['cls-net360', 'cls-dist410', 'cls-ds301'],
@@ -533,42 +578,50 @@ export const seedReviews: Review[] = [
   {
     id: 'rev-1',
     authorName: 'Student',
+    grade: 'A',
     rating: 5,
     body: 'Lectures are clear and projects map well to career skills.',
     tags: ['Clear', 'Engaging'],
     createdAt: '2025-11-02',
     entityKind: 'class',
     entityId: 'cls-cs101',
+    isAnonymous: true,
   },
   {
     id: 'rev-2',
     authorName: 'Student',
+    grade: 'B+',
     rating: 4,
     body: 'Heavy workload but fair grading.',
     tags: ['Heavy workload', 'Helpful'],
     createdAt: '2025-10-18',
     entityKind: 'class',
     entityId: 'cls-ds301',
+    isAnonymous: true,
   },
   {
     id: 'rev-3',
     authorName: 'Student',
+    grade: 'A-',
     rating: 5,
     body: 'Office hours saved me during exam season.',
     tags: ['Helpful', 'Good explanations'],
     createdAt: '2025-09-12',
     entityKind: 'professor',
     entityId: 'prof-rivera',
+    isAnonymous: true,
   },
   {
     id: 'rev-4',
     authorName: 'Student',
+    grade: 'A',
     rating: 4,
     body: 'Labs are the highlight; expect time commitment.',
     tags: ['Engaging', 'Heavy workload'],
     createdAt: '2025-11-01',
     entityKind: 'ta',
     entityId: 'ta-02',
+    isAnonymous: true,
   },
 ];
 
@@ -594,9 +647,19 @@ export const seedCollaboration: CollaborationEndorsement[] = [
 ];
 
 export const peersWhoAlreadyConnected: string[] = [
-  'stud-01', 'stud-02', 'stud-04', 'stud-05', 'stud-06',
-  'stud-08', 'stud-10', 'stud-11', 'stud-13', 'stud-14',
-  'stud-15', 'stud-17', 'stud-18',
+  'stud-01',
+  'stud-02',
+  'stud-04',
+  'stud-05',
+  'stud-06',
+  'stud-08',
+  'stud-10',
+  'stud-11',
+  'stud-13',
+  'stud-14',
+  'stud-15',
+  'stud-17',
+  'stud-18',
 ];
 
 export const seedThreads: ChatThread[] = [

@@ -20,7 +20,7 @@ export function Screen({
   keyboardOffset?: number;
 }) {
   const c = useAppColors();
-  const px = padded ? 20 : 0;
+  const px = padded ? 24 : 0;
 
   let content: ReactNode;
   if (scroll) {
@@ -28,7 +28,8 @@ export function Screen({
       <ScrollView
         contentContainerStyle={[styles.scroll, { paddingHorizontal: px }]}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled">
+        keyboardShouldPersistTaps="handled"
+      >
         {children}
       </ScrollView>
     );
@@ -41,14 +42,15 @@ export function Screen({
       <KeyboardAvoidingView
         style={styles.fill}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={keyboardOffset}>
+        keyboardVerticalOffset={keyboardOffset}
+      >
         {content}
       </KeyboardAvoidingView>
     );
   }
 
   return (
-    <SafeAreaView style={[styles.fill, { backgroundColor: c.background }]} edges={edges}>
+    <SafeAreaView style={[styles.fill, { backgroundColor: c.surface }]} edges={edges}>
       {content}
     </SafeAreaView>
   );
@@ -56,5 +58,5 @@ export function Screen({
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
-  scroll: { flexGrow: 1, paddingBottom: 32 },
+  scroll: { flexGrow: 1, paddingBottom: 120 },
 });

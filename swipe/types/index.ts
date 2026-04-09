@@ -7,6 +7,7 @@ export type ReviewEntityKind = 'class' | 'professor' | 'ta';
 export interface StudentProfile {
   id: string;
   fullName: string;
+  university: string;
   program: string;
   yearLabel: string;
   classIds: string[];
@@ -29,6 +30,7 @@ export interface CourseOffering {
   instructorName: string;
   semester: string;
   tags: string[];
+  traits: string[];
 }
 
 export interface ProfessorProfile {
@@ -41,6 +43,7 @@ export interface ProfessorProfile {
   reviewSnippet: string;
   coursesTaught: string[];
   imageUrl: string;
+  traits: string[];
 }
 
 export interface TAProfile {
@@ -52,17 +55,20 @@ export interface TAProfile {
   rating: number;
   reviewSnippet: string;
   imageUrl: string;
+  traits: string[];
 }
 
 export interface Review {
   id: string;
   authorName: string;
+  grade?: string;
   rating: number;
   body: string;
   tags: string[];
   createdAt: string;
   entityKind: ReviewEntityKind;
   entityId: string;
+  isAnonymous?: boolean;
 }
 
 export interface MatchRecord {

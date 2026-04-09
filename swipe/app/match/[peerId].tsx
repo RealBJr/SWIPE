@@ -3,8 +3,8 @@ import { Image } from 'expo-image';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useEffect, useRef } from 'react';
-import { Dimensions, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useEffect } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
   Easing,
   FadeIn,
@@ -18,14 +18,11 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import { Copy } from '@/constants/copy';
 import { Accent } from '@/constants/theme';
 import { studentById } from '@/data/seed';
 import { sharedClassLabel, threadIdForPeer } from '@/services/matching';
 import { useAppColors } from '@/hooks/use-app-colors';
 import { useAppStore } from '@/store/app-store';
-
-const { width: SCREEN_W } = Dimensions.get('window');
 
 export default function MatchModal() {
   const { peerId } = useLocalSearchParams<{ peerId: string }>();
@@ -72,10 +69,7 @@ export default function MatchModal() {
 
   return (
     <View style={[styles.container, { backgroundColor: c.background }]}>
-      <LinearGradient
-        colors={[Accent.blue + '20', 'transparent']}
-        style={styles.topGlow}
-      />
+      <LinearGradient colors={[Accent.blue + '20', 'transparent']} style={styles.topGlow} />
 
       <View style={styles.content}>
         <Animated.View entering={FadeIn.duration(600)} style={styles.avatarRow}>
@@ -87,7 +81,9 @@ export default function MatchModal() {
                 </View>
               ) : null}
               {peer?.imageUrl ? (
-                <View style={[styles.avatarRing, styles.avatarOverlap, { borderColor: Accent.blue }]}>
+                <View
+                  style={[styles.avatarRing, styles.avatarOverlap, { borderColor: Accent.blue }]}
+                >
                   <Image source={{ uri: peer.imageUrl }} style={styles.avatar} />
                 </View>
               ) : null}
@@ -105,18 +101,23 @@ export default function MatchModal() {
 
         <Animated.Text
           entering={FadeInDown.delay(300).duration(500)}
-          style={[styles.title, { color: c.text }]}>
-          It's a match!
+          style={[styles.title, { color: c.text }]}
+        >
+          It is a match!
         </Animated.Text>
 
         <Animated.Text
           entering={FadeInDown.delay(450).duration(500)}
-          style={[styles.subtitle, { color: c.textSecondary }]}>
+          style={[styles.subtitle, { color: c.textSecondary }]}
+        >
           You and {name} both want to connect.
         </Animated.Text>
 
         {shared ? (
-          <Animated.View entering={FadeInDown.delay(550).duration(400)} style={[styles.sharedBadge, { backgroundColor: Accent.blueMuted }]}>
+          <Animated.View
+            entering={FadeInDown.delay(550).duration(400)}
+            style={[styles.sharedBadge, { backgroundColor: Accent.blueMuted }]}
+          >
             <Ionicons name="school-outline" size={14} color={Accent.blue} />
             <Text style={[styles.sharedText, { color: Accent.blue }]}>{shared}</Text>
           </Animated.View>
@@ -132,7 +133,8 @@ export default function MatchModal() {
               styles.primaryBtn,
               { backgroundColor: Accent.blue },
               pressed && { opacity: 0.9, transform: [{ scale: 0.97 }] },
-            ]}>
+            ]}
+          >
             <Ionicons name="chatbubble" size={18} color="#FFF" />
             <Text style={styles.primaryBtnText}>Say Hello</Text>
           </Pressable>
@@ -143,8 +145,11 @@ export default function MatchModal() {
               styles.secondaryBtn,
               { borderColor: c.border },
               pressed && { opacity: 0.8 },
-            ]}>
-            <Text style={[styles.secondaryBtnText, { color: c.textSecondary }]}>Keep Exploring</Text>
+            ]}
+          >
+            <Text style={[styles.secondaryBtnText, { color: c.textSecondary }]}>
+              Keep Exploring
+            </Text>
           </Pressable>
         </Animated.View>
       </View>
@@ -157,7 +162,13 @@ const AVATAR_SIZE = 90;
 const styles = StyleSheet.create({
   container: { flex: 1 },
   topGlow: { position: 'absolute', top: 0, left: 0, right: 0, height: 300 },
-  content: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 32, gap: 8 },
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 32,
+    gap: 8,
+  },
 
   avatarRow: { marginBottom: 8 },
   avatarStack: { flexDirection: 'row', alignItems: 'center' },

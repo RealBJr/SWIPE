@@ -87,7 +87,7 @@ export interface AppState {
   unsaveTA: (id: string) => void;
 
   sendMessage: (threadId: string, body: string) => void;
-  addReview: (r: Omit<Review, 'id' | 'authorName' | 'createdAt'>) => void;
+  addReview: (r: Omit<Review, 'id' | 'authorName' | 'createdAt'> & { authorName?: string }) => void;
   setDismissedMatch: (peerId: string | null) => void;
   resetDemo: () => void;
 }
@@ -256,7 +256,9 @@ export const useAppStore = create<AppState>()(
 
       saveProfessor: (id) =>
         set((s) => ({
-          savedProfessors: s.savedProfessors.includes(id) ? s.savedProfessors : [...s.savedProfessors, id],
+          savedProfessors: s.savedProfessors.includes(id)
+            ? s.savedProfessors
+            : [...s.savedProfessors, id],
         })),
 
       saveTA: (id) =>
@@ -265,7 +267,8 @@ export const useAppStore = create<AppState>()(
         })),
 
       unsaveClass: (id) => set((s) => ({ savedClasses: s.savedClasses.filter((x) => x !== id) })),
-      unsaveProfessor: (id) => set((s) => ({ savedProfessors: s.savedProfessors.filter((x) => x !== id) })),
+      unsaveProfessor: (id) =>
+        set((s) => ({ savedProfessors: s.savedProfessors.filter((x) => x !== id) })),
       unsaveTA: (id) => set((s) => ({ savedTAs: s.savedTAs.filter((x) => x !== id) })),
 
       sendMessage: (threadId, body) => {
@@ -295,7 +298,9 @@ export const useAppStore = create<AppState>()(
 
       addReview: (r) => {
         const id = `rev-${Date.now()}`;
-        const name = get().profile?.fullName ?? 'You';
+        const profileName = get().profile?.fullName ?? 'You';
+        const isAnonymous = r.isAnonymous ?? true;
+        const name = r.authorName ?? (isAnonymous ? 'Anonymous' : profileName);
         const review: Review = {
           ...r,
           id,
@@ -351,7 +356,9 @@ function uniqPushObjects<T>(arr: T[], item: T, key: (x: T) => string) {
 
 export function mergedReviews(kind: import('@/types').Review['entityKind'], entityId: string) {
   const seed = seedReviews.filter((r) => r.entityKind === kind && r.entityId === entityId);
-  const user = useAppStore.getState().userReviews.filter((r) => r.entityKind === kind && r.entityId === entityId);
+  const user = useAppStore
+    .getState()
+    .userReviews.filter((r) => r.entityKind === kind && r.entityId === entityId);
   return [...seed, ...user];
 }
 

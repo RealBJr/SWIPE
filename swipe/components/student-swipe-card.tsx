@@ -1,113 +1,168 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Image } from 'expo-image';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, Text, View } from 'react-native';
+import Animated, { Extrapolation, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import type { SharedValue } from 'react-native-reanimated';
 
 import { Copy } from '@/constants/copy';
-import { Accent } from '@/constants/theme';
-import { courseById } from '@/data/seed';
+import { Fonts } from '@/constants/theme';
 import { useAppColors } from '@/hooks/use-app-colors';
 import type { StudentProfile } from '@/types';
 
-const IMAGE_H = Dimensions.get('window').height * 0.34;
+const ACTION_BOX_WIDTH = 96;
+const ACTION_CONFIRM_X = 56;
 
 export function StudentSwipeCard({
   student,
-  viewerClassIds,
+  sliderX,
 }: {
   student: StudentProfile;
-  viewerClassIds: string[];
+  sliderX: SharedValue<number>;
 }) {
   const c = useAppColors();
-  const shared = student.classIds.filter((id) => viewerClassIds.includes(id));
-  const sharedNames = shared
-    .map((id) => courseById(id)?.title?.split(' ').slice(-1)[0])
-    .filter(Boolean)
-    .slice(0, 3);
+  const leftBodyStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: interpolate(
+          sliderX.value,
+          [0, ACTION_CONFIRM_X],
+          [0, ACTION_BOX_WIDTH],
+          Extrapolation.CLAMP
+        ),
+      },
+    ],
+  }));
+
+  const railStyle = useAnimatedStyle(() => ({
+    width: interpolate(
+      sliderX.value,
+      [0, ACTION_CONFIRM_X],
+      [ACTION_BOX_WIDTH, 0],
+      Extrapolation.CLAMP
+    ),
+  }));
+
+  const railTextStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(sliderX.value, [0, ACTION_CONFIRM_X * 0.6], [1, 0], Extrapolation.CLAMP),
+  }));
 
   return (
     <View style={styles.root}>
-      <View style={styles.imageWrap}>
-        <Image source={{ uri: student.imageUrl }} style={styles.image} contentFit="cover" />
-        <LinearGradient
-          colors={['transparent', 'rgba(0,0,0,0.65)']}
-          style={styles.gradient}
-        />
-        {shared.length > 0 ? (
-          <View style={styles.recommendBadge}>
-            <Text style={styles.recommendText}>RECOMMENDED</Text>
-          </View>
-        ) : null}
-        <View style={styles.overlayInfo}>
-          <Text style={styles.overlayName}>{student.fullName}</Text>
-          <Text style={styles.overlayMeta}>
-            {student.program} · {student.yearLabel}
-          </Text>
-        </View>
-      </View>
+      <Image
+        source={{ uri: student.imageUrl }}
+        style={StyleSheet.absoluteFill}
+        contentFit="cover"
+      />
+      <LinearGradient
+        colors={['rgba(0,0,0,0.08)', 'rgba(0,0,0,0.38)']}
+        style={StyleSheet.absoluteFill}
+      />
 
-      <View style={styles.body}>
-        {sharedNames.length > 0 ? (
-          <View style={[styles.sharedSection, { backgroundColor: c.surface }]}>
-            <View style={styles.sharedHeader}>
-              <Ionicons name="school-outline" size={14} color={Accent.blue} />
-              <Text style={[styles.sharedLabel, { color: Accent.blue }]}>{Copy.sharedClass.toUpperCase()}ES</Text>
-            </View>
-            <View style={styles.sharedTags}>
-              {sharedNames.map((name) => (
-                <View key={name} style={[styles.sharedPill, { backgroundColor: c.background, borderColor: c.border }]}>
-                  <Text style={[styles.sharedPillText, { color: c.text }]}>{name}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-        ) : null}
-
-        <Text style={[styles.bio, { color: c.textSecondary }]} numberOfLines={3}>
-          "{student.bio}"
-        </Text>
-
-        {student.suggestedContexts.length > 0 ? (
-          <View style={styles.contextTags}>
-            {student.suggestedContexts.slice(0, 3).map((t) => (
-              <View key={t} style={[styles.tag, { backgroundColor: Accent.blueMuted }]}>
-                <Text style={[styles.tagText, { color: Accent.blue }]}>{t}</Text>
+      <View style={styles.plateWrap}>
+        <View style={[styles.plate, { backgroundColor: 'rgba(246,240,234,0.84)' }]}>
+          <Animated.View style={[styles.leftBody, leftBodyStyle]}>
+            <View style={styles.titleRow}>
+              <Text style={styles.name} numberOfLines={1}>
+                {student.fullName}
+              </Text>
+              <View style={styles.yearBadge}>
+                <Text style={styles.yearText}>{student.yearLabel}</Text>
               </View>
-            ))}
-          </View>
-        ) : null}
+            </View>
+
+            <View style={styles.metaRow}>
+              <View style={[styles.metaPill, { backgroundColor: c.seaGreenSoft }]}>
+                <Text style={[styles.metaPillText, { color: c.primary }]} numberOfLines={1}>
+                  {student.program}
+                </Text>
+              </View>
+              <View style={styles.metaPill}>
+                <Text style={styles.metaPillText} numberOfLines={1}>
+                  {student.university}
+                </Text>
+              </View>
+            </View>
+
+            <Text style={styles.bio} numberOfLines={3}>
+              {student.bio}
+            </Text>
+          </Animated.View>
+
+          <Animated.View style={[styles.actionRail, { backgroundColor: c.primary }, railStyle]}>
+            <Ionicons name="chevron-forward" size={34} color="#FFFFFF" />
+            <Animated.Text style={[styles.actionLabel, railTextStyle]}>
+              {Copy.connect.toUpperCase()}
+            </Animated.Text>
+          </Animated.View>
+        </View>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 },
-  imageWrap: { height: IMAGE_H, position: 'relative' },
-  image: { width: '100%', height: '100%', backgroundColor: '#E0E0E0' },
-  gradient: { position: 'absolute', bottom: 0, left: 0, right: 0, height: IMAGE_H * 0.5 },
-  recommendBadge: {
-    position: 'absolute',
-    bottom: 80,
-    left: 16,
-    backgroundColor: Accent.blue,
-    borderRadius: 6,
-    paddingVertical: 4,
-    paddingHorizontal: 10,
+  root: { flex: 1, justifyContent: 'flex-end' },
+  plateWrap: { paddingHorizontal: 14, paddingBottom: 80 },
+  plate: {
+    borderRadius: 24,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    minHeight: 220,
   },
-  recommendText: { color: '#FFF', fontSize: 10, fontWeight: '800', letterSpacing: 1 },
-  overlayInfo: { position: 'absolute', bottom: 16, left: 16, right: 16 },
-  overlayName: { color: '#FFF', fontSize: 26, fontWeight: '900', letterSpacing: -0.3 },
-  overlayMeta: { color: 'rgba(255,255,255,0.8)', fontSize: 14, fontWeight: '600', marginTop: 2 },
-  body: { padding: 16, gap: 12 },
-  sharedSection: { borderRadius: 14, padding: 14, gap: 8 },
-  sharedHeader: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  sharedLabel: { fontSize: 11, fontWeight: '800', letterSpacing: 0.8 },
-  sharedTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  sharedPill: { borderRadius: 10, borderWidth: 1, paddingVertical: 6, paddingHorizontal: 14 },
-  sharedPillText: { fontSize: 13, fontWeight: '700' },
-  bio: { fontSize: 14, lineHeight: 21, fontStyle: 'italic' },
-  contextTags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  tag: { borderRadius: 20, paddingVertical: 5, paddingHorizontal: 12 },
-  tagText: { fontSize: 12, fontWeight: '700' },
+  leftBody: { flex: 1, padding: 18, gap: 12 },
+  titleRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 10,
+  },
+  name: {
+    fontSize: 40,
+    fontWeight: '800',
+    color: '#232525',
+    letterSpacing: -0.8,
+    fontFamily: Fonts.sans,
+    flex: 1,
+  },
+  yearBadge: {
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    borderWidth: 1.5,
+    borderColor: 'rgba(28, 30, 30, 0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.35)',
+  },
+  yearText: { fontSize: 14, fontWeight: '700', color: '#2B2E2B', fontFamily: Fonts.sans },
+  metaRow: { flexDirection: 'row', gap: 8, flexWrap: 'wrap' },
+  metaPill: {
+    borderRadius: 999,
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    paddingVertical: 5,
+    paddingHorizontal: 12,
+  },
+  metaPillText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#3A3F3B',
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
+    fontFamily: Fonts.sans,
+  },
+  bio: {
+    fontSize: 17,
+    lineHeight: 28,
+    color: '#353A35',
+    fontFamily: Fonts.sans,
+  },
+  actionRail: { width: ACTION_BOX_WIDTH, alignItems: 'center', justifyContent: 'center', gap: 12 },
+  actionLabel: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontWeight: '800',
+    letterSpacing: 1.1,
+    fontFamily: Fonts.sans,
+  },
 });

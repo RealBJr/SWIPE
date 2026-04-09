@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import { PrimaryButton } from '@/components/ui/primary-button';
 import { Screen } from '@/components/ui/screen';
-import { Accent, Layout } from '@/constants/theme';
+import { Fonts, Layout } from '@/constants/theme';
 import { seedCourses } from '@/data/seed';
 import { useAppColors } from '@/hooks/use-app-colors';
 import { useAppStore } from '@/store/app-store';
@@ -46,14 +46,25 @@ export default function EditProfileScreen() {
 
   return (
     <Screen scroll>
-      <Text style={[styles.title, { color: c.text }]}>Edit profile</Text>
-      <Field label="Name" value={fullName} onChangeText={setFullName} c={c} />
-      <Field label="Program" value={program} onChangeText={setProgram} c={c} />
-      <Field label="Year" value={yearLabel} onChangeText={setYearLabel} c={c} />
-      <Field label="Bio" value={bio} onChangeText={setBio} c={c} multiline />
-      <Field label="Interests (comma-separated)" value={interests} onChangeText={setInterests} c={c} />
-      <Field label="Profile image URL" value={imageUrl} onChangeText={setImageUrl} c={c} />
-      <Text style={[styles.label, { color: c.textSecondary }]}>Classes</Text>
+      <Text style={[styles.title, { color: c.onSurface }]}>Edit profile</Text>
+      <Field label="Name" value={fullName} onChangeText={setFullName} multiline={false} />
+      <Field label="Program" value={program} onChangeText={setProgram} multiline={false} />
+      <Field label="Year" value={yearLabel} onChangeText={setYearLabel} multiline={false} />
+      <Field label="Bio" value={bio} onChangeText={setBio} multiline />
+      <Field
+        label="Interests (comma-separated)"
+        value={interests}
+        onChangeText={setInterests}
+        multiline={false}
+      />
+      <Field
+        label="Profile image URL"
+        value={imageUrl}
+        onChangeText={setImageUrl}
+        multiline={false}
+      />
+
+      <Text style={[styles.label, { color: c.onSurfaceVariant }]}>Classes</Text>
       <View style={styles.pillWrap}>
         {seedCourses.map((course) => {
           const on = classIds.includes(course.id);
@@ -64,10 +75,19 @@ export default function EditProfileScreen() {
               style={[
                 styles.pill,
                 on
-                  ? { backgroundColor: Accent.blueMuted }
-                  : { backgroundColor: c.surface, ...Layout.shadowLight },
-              ]}>
-              <Text style={{ color: on ? Accent.blue : c.text, fontWeight: '700', fontSize: 13 }}>
+                  ? { backgroundColor: c.seaGreenSoft }
+                  : { backgroundColor: c.surfaceContainerLowest },
+                !on && Layout.seaGlowLight,
+              ]}
+            >
+              <Text
+                style={{
+                  color: on ? c.primary : c.onSurface,
+                  fontWeight: '700',
+                  fontSize: 13,
+                  fontFamily: Fonts.sans,
+                }}
+              >
                 {course.code}
               </Text>
             </Pressable>
@@ -83,26 +103,33 @@ function Field({
   label,
   value,
   onChangeText,
-  c,
   multiline,
 }: {
   label: string;
   value: string;
   onChangeText: (t: string) => void;
-  c: ReturnType<typeof useAppColors>;
   multiline?: boolean;
 }) {
+  const c = useAppColors();
+  const [focused, setFocused] = useState(false);
+
   return (
     <View style={{ marginBottom: 16 }}>
-      <Text style={[styles.label, { color: c.textSecondary }]}>{label}</Text>
+      <Text style={[styles.label, { color: c.onSurfaceVariant }]}>{label}</Text>
       <TextInput
         value={value}
         onChangeText={onChangeText}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
         placeholderTextColor={c.textMuted}
         multiline={multiline}
         style={[
           styles.input,
-          { color: c.text, backgroundColor: c.surface },
+          {
+            color: c.onSurface,
+            backgroundColor: focused ? c.surfaceContainerLowest : c.surfaceContainerLow,
+            borderColor: focused ? c.ghostBorderFocus : c.ghostBorder,
+          },
           multiline && { minHeight: 96, textAlignVertical: 'top' },
         ]}
       />
@@ -111,17 +138,34 @@ function Field({
 }
 
 const styles = StyleSheet.create({
-  title: { fontSize: 24, fontWeight: '900', marginBottom: 16, letterSpacing: -0.3 },
-  label: { fontSize: 12, fontWeight: '700', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 0.5 },
+  title: {
+    fontSize: 32,
+    fontWeight: '900',
+    marginBottom: 18,
+    letterSpacing: -0.64,
+    fontFamily: Fonts.sans,
+    marginLeft: 10,
+  },
+  label: {
+    fontSize: 12,
+    fontWeight: '700',
+    marginBottom: 7,
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    fontFamily: Fonts.sans,
+  },
   input: {
-    borderRadius: 14,
+    borderRadius: Layout.radiusLg,
+    borderWidth: 1,
     paddingHorizontal: 14,
     paddingVertical: 12,
     fontSize: 16,
+    lineHeight: 24,
+    fontFamily: Fonts.sans,
   },
-  pillWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 8, marginBottom: 20 },
+  pillWrap: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 24 },
   pill: {
-    borderRadius: 20,
+    borderRadius: 999,
     paddingVertical: 8,
     paddingHorizontal: 14,
   },

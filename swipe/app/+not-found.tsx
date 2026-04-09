@@ -13,10 +13,13 @@ export default function NotFoundScreen() {
         <Text style={[styles.code, { color: c.textMuted }]}>404</Text>
         <Text style={[styles.title, { color: c.text }]}>Page not found</Text>
         <Text style={[styles.body, { color: c.textSecondary }]}>
-          The screen you're looking for doesn't exist or has been moved.
+          The screen you are looking for does not exist or has been moved.
         </Text>
         <View style={styles.btn}>
-          <PrimaryButton label="Back to Explore" onPress={() => router.replace('/(tabs)/explore')} />
+          <PrimaryButton
+            label="Back to Explore"
+            onPress={() => router.replace('/(tabs)/explore')}
+          />
         </View>
       </View>
     </Screen>

@@ -7,7 +7,7 @@ import { SectionHeader } from '@/components/section-header';
 import { PrimaryButton } from '@/components/ui/primary-button';
 import { Screen } from '@/components/ui/screen';
 import { Copy } from '@/constants/copy';
-import { Accent, Layout } from '@/constants/theme';
+import { Fonts, Layout } from '@/constants/theme';
 import { courseById, seedCollaboration, studentById } from '@/data/seed';
 import { useAppColors } from '@/hooks/use-app-colors';
 import { useAppStore } from '@/store/app-store';
@@ -33,21 +33,35 @@ export default function ProfileScreen() {
 
   return (
     <Screen scroll>
-      <View style={[styles.header, { backgroundColor: c.surface }, Layout.shadow]}>
-        <View style={[styles.avatarRing, { borderColor: Accent.blue }]}>
+      <View
+        style={[styles.headerCard, { backgroundColor: c.glass }, Layout.seaGlow, Layout.webGlass]}
+      >
+        <View
+          style={[
+            styles.avatarRing,
+            { backgroundColor: c.surfaceContainerLow, borderColor: c.ghostBorderFocus },
+          ]}
+        >
           <Image source={{ uri: profile.imageUrl }} style={styles.avatar} />
         </View>
-        <Text style={[styles.name, { color: c.text }]}>{profile.fullName}</Text>
-        <Text style={[styles.meta, { color: c.textSecondary }]}>
-          {profile.program} · {profile.yearLabel}
+        <Text style={[styles.name, { color: c.onSurface }]}>{profile.fullName}</Text>
+        <Text style={[styles.meta, { color: c.onSurfaceVariant }]}>
+          {profile.program} - {profile.yearLabel}
         </Text>
-        <Text style={[styles.bio, { color: c.textSecondary }]}>{profile.bio}</Text>
+        <Text style={[styles.bio, { color: c.onSurfaceVariant }]}>{profile.bio}</Text>
         <View style={styles.btnRow}>
           <View style={styles.btnHalf}>
-            <PrimaryButton label={Copy.editProfile} onPress={() => router.push('/(tabs)/profile/edit')} />
+            <PrimaryButton
+              label={Copy.editProfile}
+              onPress={() => router.push('/(tabs)/profile/edit')}
+            />
           </View>
           <View style={styles.btnHalf}>
-            <PrimaryButton label={Copy.findConnections} variant="outline" onPress={() => router.push('/(tabs)/explore')} />
+            <PrimaryButton
+              label={Copy.findConnections}
+              variant="secondary"
+              onPress={() => router.push('/(tabs)/explore')}
+            />
           </View>
         </View>
       </View>
@@ -58,7 +72,9 @@ export default function ProfileScreen() {
       ) : (
         recent.map((m) => {
           const peer = studentById(m.peerId);
-          const shared = m.sharedClassHint ? `Shared: ${m.sharedClassHint}` : 'Suggested connection';
+          const shared = m.sharedClassHint
+            ? `Shared: ${m.sharedClassHint}`
+            : 'Suggested connection';
           return (
             <CompactAcademicRow
               key={m.id}
@@ -71,56 +87,83 @@ export default function ProfileScreen() {
       )}
 
       <SectionHeader title={Copy.academicRegistry} />
-      <Text style={[styles.previewHint, { color: c.textSecondary }]}>
+      <Text style={[styles.previewHint, { color: c.onSurfaceVariant }]}>
         {savedClasses.length + savedProfessors.length + savedTAs.length} saved items
       </Text>
-      <PrimaryButton label="Open saved registry" variant="outline" onPress={() => router.push('/(tabs)/saved')} />
+      <PrimaryButton
+        label="Open saved registry"
+        variant="tertiary"
+        onPress={() => router.push('/(tabs)/saved')}
+      />
 
       <SectionHeader title={Copy.myClasses} />
       {profile.classIds.map((id) => {
         const co = courseById(id);
         if (!co) return null;
         return (
-          <CompactAcademicRow key={id} title={`${co.code} · ${co.title}`} subtitle={co.department} />
+          <CompactAcademicRow
+            key={id}
+            title={`${co.code} - ${co.title}`}
+            subtitle={co.department}
+          />
         );
       })}
 
       <SectionHeader title={Copy.collaborationFeedback} />
-      <Text style={[styles.score, { color: c.text }]}>
-        {Copy.collaborationScore}: {collabScore}/100
+      <Text style={[styles.score, { color: c.onSurface }]}>
+        {Copy.collaborationScore}: <Text style={{ color: c.primary }}>{collabScore}/100</Text>
       </Text>
-      <Text style={[styles.endorseLabel, { color: c.textSecondary }]}>{Copy.endorsements}</Text>
+      <Text style={[styles.endorseLabel, { color: c.onSurfaceVariant }]}>{Copy.endorsements}</Text>
       {seedCollaboration.map((e) => (
-        <CompactAcademicRow key={e.id} title={e.trait} subtitle={`From ${e.fromName}`} meta={e.context} />
+        <CompactAcademicRow
+          key={e.id}
+          title={e.trait}
+          subtitle={`From ${e.fromName}`}
+          meta={e.context}
+        />
       ))}
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    borderRadius: 20,
-    padding: 20,
+  headerCard: {
+    borderRadius: Layout.radiusXl,
+    padding: 22,
     gap: 6,
     marginTop: 8,
     alignItems: 'center',
   },
   avatarRing: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 2.5,
+    width: 104,
+    height: 104,
+    borderRadius: 52,
+    borderWidth: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  avatar: { width: 92, height: 92, borderRadius: 46 },
-  name: { fontSize: 22, fontWeight: '900', textAlign: 'center', marginTop: 8 },
-  meta: { fontSize: 14, fontWeight: '700', textAlign: 'center' },
-  bio: { fontSize: 14, lineHeight: 21, textAlign: 'center', marginTop: 4 },
+  avatar: { width: 94, height: 94, borderRadius: 47 },
+  name: {
+    fontSize: 24,
+    fontWeight: '900',
+    textAlign: 'center',
+    marginTop: 8,
+    letterSpacing: -0.4,
+    fontFamily: Fonts.sans,
+  },
+  meta: {
+    fontSize: 14,
+    fontWeight: '700',
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    fontFamily: Fonts.sans,
+  },
+  bio: { fontSize: 15, lineHeight: 24, textAlign: 'center', marginTop: 6, fontFamily: Fonts.sans },
   btnRow: { flexDirection: 'row', gap: 10, marginTop: 14, width: '100%' },
   btnHalf: { flex: 1 },
-  emptyHint: { fontWeight: '600', fontSize: 14 },
-  previewHint: { marginBottom: 10, fontWeight: '600' },
-  score: { fontSize: 20, fontWeight: '900' },
-  endorseLabel: { marginTop: 4, marginBottom: 10, fontWeight: '600' },
+  emptyHint: { fontWeight: '600', fontSize: 14, fontFamily: Fonts.sans },
+  previewHint: { marginBottom: 10, fontWeight: '600', fontFamily: Fonts.sans },
+  score: { fontSize: 22, fontWeight: '900', fontFamily: Fonts.sans },
+  endorseLabel: { marginTop: 6, marginBottom: 10, fontWeight: '600', fontFamily: Fonts.sans },
 });

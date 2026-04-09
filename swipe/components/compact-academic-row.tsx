@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { Layout } from '@/constants/theme';
+import { Fonts, Layout } from '@/constants/theme';
 import { useAppColors } from '@/hooks/use-app-colors';
 
 export function CompactAcademicRow({
@@ -18,16 +18,17 @@ export function CompactAcademicRow({
 }) {
   const c = useAppColors();
   return (
-    <View style={[styles.row, { backgroundColor: c.surface }, Layout.shadowLight]}>
+    <View style={[styles.row, { backgroundColor: c.surfaceContainerLowest }, Layout.seaGlowLight]}>
       <Pressable
         accessibilityRole={onPress ? 'button' : undefined}
         onPress={onPress}
-        style={({ pressed }) => [{ flex: 1 }, pressed && onPress && { opacity: 0.85 }]}>
-        <Text style={[styles.title, { color: c.text }]} numberOfLines={2}>
+        style={({ pressed }) => [{ flex: 1 }, pressed && onPress && { opacity: 0.85 }]}
+      >
+        <Text style={[styles.title, { color: c.onSurface }]} numberOfLines={2}>
           {title}
         </Text>
         {subtitle ? (
-          <Text style={[styles.sub, { color: c.textSecondary }]} numberOfLines={2}>
+          <Text style={[styles.sub, { color: c.onSurfaceVariant }]} numberOfLines={2}>
             {subtitle}
           </Text>
         ) : null}
@@ -35,7 +36,11 @@ export function CompactAcademicRow({
       </Pressable>
       {onRemove ? (
         <Pressable onPress={onRemove} hitSlop={8} style={styles.removeWrap}>
-          <Text style={{ color: '#EF4444', fontWeight: '700', fontSize: 12 }}>Remove</Text>
+          <Text
+            style={{ color: c.primary, fontWeight: '700', fontSize: 12, fontFamily: Fonts.sans }}
+          >
+            Remove
+          </Text>
         </Pressable>
       ) : null}
     </View>
@@ -44,16 +49,23 @@ export function CompactAcademicRow({
 
 const styles = StyleSheet.create({
   row: {
-    borderRadius: 16,
-    paddingVertical: 14,
+    borderRadius: Layout.radiusLg,
+    paddingVertical: 16,
     paddingHorizontal: 16,
-    marginBottom: 10,
+    marginBottom: 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
   },
   removeWrap: { paddingLeft: 8 },
-  title: { fontSize: 15, fontWeight: '700' },
-  sub: { marginTop: 4, fontSize: 13, fontWeight: '500' },
-  meta: { marginTop: 5, fontSize: 12, fontWeight: '600' },
+  title: { fontSize: 16, fontWeight: '700', fontFamily: Fonts.sans },
+  sub: { marginTop: 4, fontSize: 14, fontWeight: '500', lineHeight: 22, fontFamily: Fonts.sans },
+  meta: {
+    marginTop: 8,
+    fontSize: 12,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.7,
+    fontFamily: Fonts.sans,
+  },
 });

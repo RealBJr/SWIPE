@@ -6,19 +6,19 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Accent, Colors } from '@/constants/theme';
+import { Colors, Fonts } from '@/constants/theme';
 import { queryClient } from '@/lib/query-client';
 
 const LightNavTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: Accent.blue,
+    primary: Colors.light.primary,
     background: Colors.light.background,
-    card: Colors.light.surface,
-    text: Colors.light.text,
-    border: Colors.light.border,
-    notification: Accent.blue,
+    card: Colors.light.surfaceContainerLowest,
+    text: Colors.light.onSurface,
+    border: Colors.light.ghostBorder,
+    notification: Colors.light.primary,
   },
 };
 
@@ -26,12 +26,12 @@ const DarkNavTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: '#60A5FA',
+    primary: Colors.dark.primary,
     background: Colors.dark.background,
-    card: Colors.dark.surface,
-    text: Colors.dark.text,
-    border: Colors.dark.border,
-    notification: '#60A5FA',
+    card: Colors.dark.surfaceContainerLowest,
+    text: Colors.dark.onSurface,
+    border: Colors.dark.ghostBorder,
+    notification: Colors.dark.primary,
   },
 };
 
@@ -41,6 +41,7 @@ export const unstable_settings = {
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
+  const navColors = colorScheme === 'dark' ? Colors.dark : Colors.light;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -50,11 +51,35 @@ export default function RootLayout() {
             screenOptions={{
               headerBackTitleVisible: false,
               headerShadowVisible: false,
-            }}>
+              headerStyle: { backgroundColor: navColors.surface },
+              headerTintColor: navColors.onSurface,
+              headerTitleStyle: { fontFamily: Fonts.sans, fontWeight: '600', fontSize: 17 },
+            }}
+          >
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="match/[peerId]" options={{ presentation: 'modal', headerShown: false }} />
-            <Stack.Screen name="review/[kind]/[id]" options={{ presentation: 'modal', title: 'Review' }} />
+            <Stack.Screen
+              name="match/[peerId]"
+              options={{ presentation: 'modal', headerShown: false }}
+            />
+            <Stack.Screen
+              name="review/[kind]/[id]"
+              options={{
+                presentation: 'transparentModal',
+                headerShown: false,
+                contentStyle: { backgroundColor: 'transparent' },
+                animation: 'slide_from_bottom',
+              }}
+            />
+            <Stack.Screen
+              name="reviews/[kind]/[id]"
+              options={{
+                presentation: 'transparentModal',
+                headerShown: false,
+                contentStyle: { backgroundColor: 'transparent' },
+                animation: 'slide_from_bottom',
+              }}
+            />
             <Stack.Screen name="class/[id]" options={{ title: 'Class' }} />
             <Stack.Screen name="professor/[id]" options={{ title: 'Professor' }} />
             <Stack.Screen name="ta/[id]" options={{ title: 'TA' }} />

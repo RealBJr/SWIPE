@@ -1,5 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import * as Haptics from 'expo-haptics';
+import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -10,23 +11,28 @@ import { SwipeDeck } from '@/components/swipe-deck';
 import { LoadingIndicator } from '@/components/ui/loading-indicator';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import { Screen } from '@/components/ui/screen';
+import { Fonts } from '@/constants/theme';
 import { courseById, professorById, studentById, taById } from '@/data/seed';
-import { useAppColors } from '@/hooks/use-app-colors';
 import { fetchExploreQueue } from '@/services/mockApi';
 import { useAppStore } from '@/store/app-store';
-import type { CourseOffering, ExploreSegment, ProfessorProfile, StudentProfile, TAProfile } from '@/types';
+import type {
+  CourseOffering,
+  ExploreSegment,
+  ProfessorProfile,
+  StudentProfile,
+  TAProfile,
+} from '@/types';
 
-const SEGMENTS: ExploreSegment[] = ['students', 'classes', 'professors', 'tas'];
+const SEGMENTS: ExploreSegment[] = ['students', 'classes', 'tas', 'professors'];
 
 const LABELS: Record<ExploreSegment, string> = {
-  students: 'Students',
+  students: 'People',
   classes: 'Classes',
-  professors: 'Professors',
-  tas: 'TAs',
+  professors: 'Prof',
+  tas: 'TA',
 };
 
 export default function ExploreScreen() {
-  const c = useAppColors();
   const qc = useQueryClient();
   const [segment, setSegment] = useState<ExploreSegment>('students');
   const profile = useAppStore((s) => s.profile);
@@ -37,7 +43,11 @@ export default function ExploreScreen() {
 
   const firstName = profile?.fullName.split(' ')[0] ?? '';
 
-  const { data: queue = [], refetch, isLoading } = useQuery({
+  const {
+    data: queue = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ['explore', segment],
     queryFn: () => fetchExploreQueue(segment),
   });
@@ -67,98 +77,152 @@ export default function ExploreScreen() {
     await refetch();
   }
 
+  function nextSegment(current: ExploreSegment): ExploreSegment {
+    const i = SEGMENTS.indexOf(current);
+    return SEGMENTS[(i + 1) % SEGMENTS.length];
+  }
+
+  function switchToNextCategory() {
+    setSegment((prev) => nextSegment(prev));
+    void Haptics.selectionAsync();
+  }
+
   return (
     <Screen padded={false}>
-      <View style={styles.header}>
-        <Text style={[styles.screenTitle, { color: c.text }]}>Explore</Text>
-        {firstName ? (
-          <Text style={[styles.greeting, { color: c.textSecondary }]}>Hey {firstName} 👋</Text>
+      <View style={styles.deck}>
+        {isLoading ? <LoadingIndicator /> : null}
+
+        {!isLoading && segment === 'students' ? (
+          <SwipeDeck
+            data={studentCards}
+            mode="connect"
+            onSwipeCategoryNext={switchToNextCategory}
+            onSwipeLeft={(item) => {
+              swipeStudent('left', item.id);
+              void Haptics.selectionAsync();
+              void invalidate();
+            }}
+            onSwipeRight={(item) => {
+              const res = swipeStudent('right', item.id);
+              void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+              void invalidate();
+              if (res.match && res.peerId) {
+                router.push({ pathname: '/match/[peerId]', params: { peerId: res.peerId } });
+              }
+            }}
+            renderCard={(s, sliderX) => <StudentSwipeCard student={s} sliderX={sliderX} />}
+          />
         ) : null}
-        <SegmentedControl values={SEGMENTS} labels={LABELS} value={segment} onChange={setSegment} />
+
+        {!isLoading && segment === 'classes' ? (
+          <SwipeDeck
+            data={classCards}
+            mode="save"
+            onSwipeCategoryNext={switchToNextCategory}
+            onSwipeLeft={(item) => {
+              swipeClass('left', item.id);
+              void invalidate();
+            }}
+            onSwipeRight={(item) => {
+              swipeClass('right', item.id);
+              void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              void invalidate();
+            }}
+            renderCard={(co, sliderX) => <ClassSwipeCard course={co} sliderX={sliderX} />}
+          />
+        ) : null}
+
+        {!isLoading && segment === 'professors' ? (
+          <SwipeDeck
+            data={profCards}
+            mode="save"
+            onSwipeCategoryNext={switchToNextCategory}
+            onSwipeLeft={(item) => {
+              swipeProfessor('left', item.id);
+              void invalidate();
+            }}
+            onSwipeRight={(item) => {
+              swipeProfessor('right', item.id);
+              void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              void invalidate();
+            }}
+            renderCard={(p, sliderX) => <ProfessorSwipeCard professor={p} sliderX={sliderX} />}
+          />
+        ) : null}
+
+        {!isLoading && segment === 'tas' ? (
+          <SwipeDeck
+            data={taCards}
+            mode="save"
+            onSwipeCategoryNext={switchToNextCategory}
+            onSwipeLeft={(item) => {
+              swipeTA('left', item.id);
+              void invalidate();
+            }}
+            onSwipeRight={(item) => {
+              swipeTA('right', item.id);
+              void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              void invalidate();
+            }}
+            renderCard={(t, sliderX) => <TASwipeCard ta={t} sliderX={sliderX} />}
+          />
+        ) : null}
       </View>
 
-      <View style={styles.deck}>
-      {isLoading ? <LoadingIndicator /> : null}
-
-      {!isLoading && segment === 'students' ? (
-        <SwipeDeck
-          data={studentCards}
-          mode="connect"
-          onSwipeLeft={(item) => {
-            swipeStudent('left', item.id);
-            void Haptics.selectionAsync();
-            void invalidate();
-          }}
-          onSwipeRight={(item) => {
-            const res = swipeStudent('right', item.id);
-            void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-            void invalidate();
-            if (res.match && res.peerId) {
-              router.push({ pathname: '/match/[peerId]', params: { peerId: res.peerId } });
-            }
-          }}
-          renderCard={(s) => <StudentSwipeCard student={s} viewerClassIds={profile?.classIds ?? []} />}
-        />
-      ) : null}
-
-      {!isLoading && segment === 'classes' ? (
-        <SwipeDeck
-          data={classCards}
-          mode="save"
-          onSwipeLeft={(item) => {
-            swipeClass('left', item.id);
-            void invalidate();
-          }}
-          onSwipeRight={(item) => {
-            swipeClass('right', item.id);
-            void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            void invalidate();
-          }}
-          renderCard={(co) => <ClassSwipeCard course={co} />}
-        />
-      ) : null}
-
-      {!isLoading && segment === 'professors' ? (
-        <SwipeDeck
-          data={profCards}
-          mode="save"
-          onSwipeLeft={(item) => {
-            swipeProfessor('left', item.id);
-            void invalidate();
-          }}
-          onSwipeRight={(item) => {
-            swipeProfessor('right', item.id);
-            void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            void invalidate();
-          }}
-          renderCard={(p) => <ProfessorSwipeCard professor={p} />}
-        />
-      ) : null}
-
-      {!isLoading && segment === 'tas' ? (
-        <SwipeDeck
-          data={taCards}
-          mode="save"
-          onSwipeLeft={(item) => {
-            swipeTA('left', item.id);
-            void invalidate();
-          }}
-          onSwipeRight={(item) => {
-            swipeTA('right', item.id);
-            void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            void invalidate();
-          }}
-          renderCard={(t) => <TASwipeCard ta={t} />}
-        />
-      ) : null}
+      <View style={styles.header}>
+        <View style={styles.brandRow}>
+          <Text style={[styles.screenTitle, { color: '#FFFFFF' }]}>SWIPE</Text>
+          {profile?.imageUrl ? (
+            <View style={styles.avatarRing}>
+              <Image source={{ uri: profile.imageUrl }} style={styles.avatar} />
+            </View>
+          ) : null}
+        </View>
+        {firstName ? (
+          <Text style={[styles.greeting, { color: 'rgba(255,255,255,0.78)' }]}>
+            Hey {firstName}
+          </Text>
+        ) : null}
+        <SegmentedControl values={SEGMENTS} labels={LABELS} value={segment} onChange={setSegment} />
       </View>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  header: { paddingHorizontal: 20, paddingTop: 14, paddingBottom: 12, gap: 6 },
-  screenTitle: { fontSize: 30, fontWeight: '900', letterSpacing: -0.5 },
-  greeting: { fontSize: 15, fontWeight: '600', marginBottom: 6 },
-  deck: { flex: 1, paddingHorizontal: 20, paddingBottom: 12 },
+  header: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 18,
+    paddingTop: 14,
+    paddingBottom: 10,
+    gap: 8,
+    zIndex: 10,
+  },
+  brandRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  screenTitle: {
+    fontSize: 38,
+    fontWeight: '900',
+    letterSpacing: 5,
+    fontFamily: Fonts.sans,
+  },
+  avatarRing: {
+    width: 38,
+    height: 38,
+    borderRadius: 19,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+    overflow: 'hidden',
+  },
+  avatar: { width: '100%', height: '100%' },
+  greeting: {
+    fontSize: 13,
+    fontWeight: '600',
+    marginBottom: 4,
+    marginLeft: 2,
+    fontFamily: Fonts.sans,
+  },
+  deck: { flex: 1, paddingHorizontal: 0, paddingBottom: 0 },
 });

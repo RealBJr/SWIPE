@@ -1,17 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-import { Accent, Layout } from '@/constants/theme';
+import { Fonts, Layout } from '@/constants/theme';
 import { useAppColors } from '@/hooks/use-app-colors';
 
-export function MessageBubble({
-  body,
-  time,
-  mine,
-}: {
-  body: string;
-  time: string;
-  mine: boolean;
-}) {
+export function MessageBubble({ body, time, mine }: { body: string; time: string; mine: boolean }) {
   const c = useAppColors();
   return (
     <View style={[styles.row, mine ? styles.alignEnd : styles.alignStart]}>
@@ -20,17 +12,20 @@ export function MessageBubble({
           styles.bubble,
           mine
             ? {
-                backgroundColor: Accent.blue,
+                backgroundColor: c.primary,
                 borderBottomRightRadius: 6,
               }
             : {
-                backgroundColor: c.surface,
+                backgroundColor: c.surfaceContainerLowest,
                 borderBottomLeftRadius: 6,
-                ...Layout.shadowLight,
+                ...Layout.seaGlowLight,
               },
-        ]}>
+        ]}
+      >
         <Text style={[styles.text, { color: mine ? '#FFF' : c.text }]}>{body}</Text>
-        <Text style={[styles.time, { color: mine ? 'rgba(255,255,255,0.7)' : c.textMuted }]}>{time}</Text>
+        <Text style={[styles.time, { color: mine ? 'rgba(255,255,255,0.7)' : c.textMuted }]}>
+          {time}
+        </Text>
       </View>
     </View>
   );
@@ -42,10 +37,16 @@ const styles = StyleSheet.create({
   alignEnd: { alignItems: 'flex-end' },
   bubble: {
     maxWidth: '82%',
-    borderRadius: 20,
+    borderRadius: 16,
     paddingVertical: 10,
     paddingHorizontal: 14,
   },
-  text: { fontSize: 15, lineHeight: 21 },
-  time: { marginTop: 5, fontSize: 11, fontWeight: '500' },
+  text: { fontSize: 15, lineHeight: 24, fontFamily: Fonts.sans },
+  time: {
+    marginTop: 6,
+    fontSize: 11,
+    fontWeight: '500',
+    letterSpacing: 0.4,
+    fontFamily: Fonts.sans,
+  },
 });
