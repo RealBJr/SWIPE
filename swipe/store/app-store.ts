@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import type { StateStorage } from 'zustand/middleware';
+import { Platform } from 'react-native';
 
 import {
   CURRENT_USER_ID,
@@ -116,6 +118,12 @@ function buildInitialMatches(): MatchRecord[] {
 }
 
 const { threads: initialThreads, messages: initialMessages } = buildInitialThreadsAndMessages();
+const noopStorage: StateStorage = {
+  getItem: async () => null,
+  setItem: async () => {},
+  removeItem: async () => {},
+};
+const storage = Platform.OS === 'web' && typeof window === 'undefined' ? noopStorage : AsyncStorage;
 
 export const useAppStore = create<AppState>()(
   persist(
@@ -323,7 +331,7 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'swipe-app-v2',
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => storage),
       partialize: (s) => ({
         isLoggedIn: s.isLoggedIn,
         hasOnboarded: s.hasOnboarded,
